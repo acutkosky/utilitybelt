@@ -1,0 +1,29 @@
+[build-system]
+requires = ["flit_core>=3.4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "jaxtools"
+version = "0.1"
+authors = [
+  { name="Ashok Cutkosky", email="ashok@cutkosky.com" },
+]
+description = "a modularized training loop and other utils for jax"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "jax[cuda12] >= 0.4.31",
+    "loadit >= 0.0.8",
+    "optax >= 0.2.3",
+    "equinox >= 0.11.5",
+    "treescope >= 0.1.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/acutkosky/jaxtools"
+Issues = "https://github.com/acutkosky/jaxtools/issues"
