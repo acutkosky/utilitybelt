@@ -1,6 +1,6 @@
 """wraps a function (usually a logging function) in a rate-limiter"""
 import time
-from typing import Callable, Dict, Any, Tuple, Boolean
+from typing import Callable, Dict, Any, Tuple
 
 
 
@@ -21,7 +21,7 @@ class RateLimitedFn:
 
         self.arg = {}
 
-    def __call__(self, x: Dict) -> Tuple[Any, Boolean]:
+    def __call__(self, x: Dict) -> Tuple[Any, bool]:
         curtime = time.time()
 
         self.aggregate(x)
