@@ -1,3 +1,4 @@
-# jaxtools
+# utilitybelt
 
-some tools for doing training with jax.
+some tools that may be useful in the future
+
