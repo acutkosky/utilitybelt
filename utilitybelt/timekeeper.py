@@ -35,7 +35,7 @@ class TimeKeeper:
             curtime = self.get_time()
 
         assert self.start_times[event] is not None
-        duration = curtime = self.start_times[event]
+        duration = curtime - self.start_times[event]
         self.start_times[event] = None
 
         self.counts[event] += count
