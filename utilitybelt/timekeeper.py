@@ -44,11 +44,11 @@ class TimeKeeper:
             self.counts[event] = max(min(self.counts[event] + count, self.window), count)
 
         self.average_durations[event] += (
-            (duration - self.average_durations[event]) / self.counts[event]
+           count * (duration/count - self.average_durations[event]) / self.counts[event]
         )
         self.average_inverse_durations[event] += (
             count
-            * (1.0 / duration - self.average_inverse_durations[event])
+            * (count / duration - self.average_inverse_durations[event])
             / self.counts[event]
         )
 
