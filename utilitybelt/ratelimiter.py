@@ -1,7 +1,9 @@
 """wraps a function (usually a logging function) in a rate-limiter"""
 import time
 from typing import Callable, Dict, Any, Tuple
+import logging
 
+logger = logging.getLogger(__name__)
 
 
 class RateLimitedFn:
@@ -27,19 +29,24 @@ class RateLimitedFn:
         self.aggregate(x)
 
         if curtime > self.last_called_time + self.call_period_sec:
-            return self.force_call(), True
+            logging.debug(f"rate limited function call with args: {self.arg}")
+            return self._force_call()
         else:
             return None, False
 
     def force_call(self):
+        logging.debug("forced rate limited function call.")
+        return self._force_call()
+        
+
+    def _force_call(self):
 
         result = self.fn(self.arg)
 
         self.arg = {}
-        self.counts = {}
         self.last_called_time = time.time()
 
-        return result
+        return result, True
 
     def __del__(self):
         self.force_call()
