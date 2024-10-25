@@ -3,13 +3,13 @@ import time
 
 
 class TimeKeeper:
-    def __init__(self, window=1000, nsec_factor=10**9):
+    def __init__(self, window=1000, unit_time_secs=1):
         self.start_times = {}
         self.counts = {}
         self.average_durations = {}
         self.average_inverse_durations = {}
         self.window = window
-        self.nsec_factor = nsec_factor
+        self.unit_time_secs = unit_time_secs
 
     def setup_timer(self, event: str):
         self.start_times[event] = None
@@ -18,7 +18,7 @@ class TimeKeeper:
         self.average_inverse_durations[event] = 0.0
 
     def get_time(self):
-        return time.time()/self.nsec_factor
+        return time.time()/self.unit_time_secs
 
     def start_timer(self, event: str, curtime=None):
         if curtime is None:
@@ -41,7 +41,7 @@ class TimeKeeper:
         self.counts[event] += count
         if self.window is not None:
             # clip self.counts to be at least count and then at most self.window if possible.
-            self.counts[event] = max(min(self.counts[event], self.window), count)
+            self.counts[event] = max(min(self.counts[event] + count, self.window), count)
 
         self.average_durations[event] += (
             count * (duration - self.average_durations[event]) / self.counts[event]
