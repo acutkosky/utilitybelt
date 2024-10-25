@@ -48,10 +48,6 @@ class RateLimitedFn:
 
         return result, True
 
-    def __del__(self):
-        self.force_call()
-
-
     def aggregate(self, x):
         if self.aggregation == "last":
             self.arg = self.arg | x
