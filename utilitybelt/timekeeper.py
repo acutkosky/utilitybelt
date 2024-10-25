@@ -73,7 +73,7 @@ class TimeKeeper:
     def normalize_durations(self, normalizing_event: str):
         normalized_durations = {}
         for event in self.average_durations:
-            normalized_durations = (
+            normalized_durations[event] = (
                 self.average_durations[event]
                 / self.average_durations[normalizing_event]
             )
