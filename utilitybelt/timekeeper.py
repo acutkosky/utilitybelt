@@ -24,7 +24,7 @@ class TimeKeeper:
             self.setup_timer(event)
             return
         assert self.start_times[event] is None
-        self.start_tiems[event] = curtime
+        self.start_times[event] = curtime
 
 
     def stop_timer(self, event: str, count: int=1, curtime=None):
@@ -40,10 +40,10 @@ class TimeKeeper:
             # clip self.counts to be at least count and then at most self.window if possible.
             self.counts[event] = max(min(self.counts[event], self.window), count)
 
-        self.average_durations[event] += (
+        self.average_durations[event] += count * (
             duration - self.average_durations[event]
         ) / self.counts[event]
-        self.average_inverse_durations[event] += (
+        self.average_inverse_durations[event] += count * (
             1.0 / duration - self.average_inverse_durations[event]
         ) / self.counts[event]
 
