@@ -12,6 +12,7 @@ class RateLimitedFn:
         fn: Callable[Dict, Any] = lambda x: None,
         call_period_sec=1.0,
         aggregation="last",
+        force_call_on_delete=False,
     ):
         self.fn = fn
         self.last_called_time = time.time()
@@ -22,6 +23,8 @@ class RateLimitedFn:
         self.call_period_sec = call_period_sec
 
         self.arg = {}
+
+        self.force_call_on_delete = force_call_on_delete
 
     def __call__(self, x: Dict) -> Tuple[Any, bool]:
         curtime = time.time()
@@ -37,16 +40,18 @@ class RateLimitedFn:
     def force_call(self):
         logging.debug("forced rate limited function call.")
         return self._force_call()
-        
 
     def _force_call(self):
-
         result = self.fn(self.arg)
 
         self.arg = {}
         self.last_called_time = time.time()
 
         return result, True
+
+    def __del__(self):
+        if self.force_call_on_delete:
+            self.force_call()
 
     def aggregate(self, x):
         if self.aggregation == "last":
